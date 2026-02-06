@@ -7,7 +7,9 @@ export default {
   theme: {
     extend: { 
       fontFamily: {
-        sans: ['Plus Jakarta Sans', 'sans-serif'],
+        sans: ['Roboto Flex', 'sans-serif'],
+        funny: ['Fredoka', 'sans-serif'],
+        hand: ['Patrick Hand', 'cursive'],
       },
     },
   },

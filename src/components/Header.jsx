@@ -1,127 +1,87 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { Search, Bell, Menu, User, ChevronDown, Rocket, LayoutGrid, Users, LogOut } from 'lucide-react';
 
-// --- STYLES CONFIGURATION ---
-const STYLES = {
-    nav: {
-        base: "fixed left-0 right-0 top-0 z-[100] flex w-full items-center justify-center transition-all duration-500 ease-in-out",
-        scrolled: "pt-6",
-        default: "pt-8"
-    },
-    container: {
-        base: "relative flex items-center justify-between overflow-hidden transition-all duration-500 ease-in-out",
-        scrolled: "h-16 w-[90%] max-w-4xl rounded-full border border-white/20 bg-[#6C5DD3] px-4 shadow-[0_0_20px_-5px_rgba(108,93,211,0.5)] backdrop-blur-xl",
-        default: "h-20 w-[95%] max-w-7xl rounded-4xl border border-white/10 bg-[#6C5DD3] px-8 backdrop-blur-sm"
-    },
-    glow: {
-        base: "absolute -left-10 top-0 h-full w-40 bg-white/10 blur-3xl transition-opacity duration-500",
-        scrolled: "opacity-40",
-        default: "opacity-20"
-    },
-    logo: {
-        container: "group relative z-10 flex cursor-pointer items-center gap-3 transition-transform active:scale-95",
-        icon: {
-            base: "flex items-center justify-center rounded-xl bg-white text-[#6C5DD3] font-black shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-500 group-hover:rotate-[10deg] group-hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]",
-            scrolled: "h-9 w-9 text-sm",
-            default: "h-10 w-10 text-base"
-        },
-        text: {
-            wrapper: "flex flex-col leading-none",
-            title: {
-                base: "font-black tracking-tighter text-white uppercase italic transition-all duration-500",
-                scrolled: "text-base",
-                default: "text-lg"
-            },
-            subtitle: {
-                base: "font-bold tracking-[0.4em] text-purple-100 uppercase transition-all duration-500",
-                scrolled: "text-[0px] opacity-0",
-                default: "text-[9px] opacity-100"
-            }
-        }
-    },
-    divider: {
-        base: "hidden w-[1px] bg-white/20 md:block transition-all duration-500",
-        scrolled: "h-6",
-        default: "h-8"
-    },
-    userInfo: {
-        container: "hidden text-right md:block",
-        name: {
-            base: "font-bold text-white transition-all duration-500",
-            scrolled: "text-[10px]",
-            default: "text-xs"
-        },
-        role: {
-            wrapper: "mt-0.5 flex items-center justify-end gap-1.5",
-            dot: "h-1.5 w-1.5 animate-pulse rounded-full bg-[#FFE55C] shadow-[0_0_8px_rgba(255,229,92,0.8)]",
-            text: "text-[10px] font-black uppercase tracking-widest text-purple-100"
-        }
-    },
-    avatar: {
-        button: {
-            base: "group relative rounded-full border-2 border-white/10 p-0.5 transition-all hover:border-white/40",
-            scrolled: "h-9 w-9",
-            default: "h-11 w-11"
-        },
-        initials: "flex h-full w-full items-center justify-center rounded-full bg-[#5245A8] text-xs font-bold text-white transition-colors group-hover:bg-[#433690]",
-        status: "absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-[#6C5DD3] bg-[#FFE55C]"
-    }
-};
 
-const Header = ({ isAdmin, userName, onHomeClick }) => {
-    const [scrolled, setScrolled] = useState(false);
+const Header = ({ onMenuClick, onDashboardClick, onUniverseClick, onCrewClick, currentUser, onLogout, onLogoClick }) => {
+    const { scrollY } = useScroll();
+    const [isScrolled, setIsScrolled] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 20);
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const getStyle = (config) => `${config.base || ''} ${scrolled ? config.scrolled : (config.default || '')}`;
+    // Trigger animation when user scrolls down 50px
+    useMotionValueEvent(scrollY, "change", (latest) => {
+        setIsScrolled(latest > 50);
+    });
 
     return (
-        <nav className={getStyle(STYLES.nav)}>
-            <div className={getStyle(STYLES.container)}>
-                
-                {/* Background Effect */}
-                <div className={getStyle(STYLES.glow)} />
+        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 pointer-events-none">
+            <motion.nav
+                initial={{ y: -100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                className="pointer-events-auto flex items-center justify-between px-6 p-4 rounded-full bg-white/80 backdrop-blur-2xl border border-white/60 shadow-[0_8px_30px_rgb(0,0,0,0.04)] w-[90%] max-w-5xl transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]"
+            >
+                {/* LEFT: Branding */}
+                <div className="flex items-center gap-4 cursor-pointer group" onClick={() => { onLogoClick && onLogoClick(); window.scrollTo(0, 0); }}>
+                    <div className="relative h-12 w-12 rounded-full bg-gradient-to-tr from-purple-100 to-fuchsia-50 flex items-center justify-center p-1.5 shadow-inner overflow-hidden group-hover:scale-105 transition-transform">
+                        <img
+                            src="/Logo.png"
+                            alt="Bakchodi International"
+                            className="w-full h-full object-contain rounded-full"
+                        />
+                    </div>
 
-                {/* Logo */}
-                <div className={STYLES.logo.container} onClick={onHomeClick}>
-                    <div className={getStyle(STYLES.logo.icon)}>B</div>
-                    <div className={STYLES.logo.text.wrapper}>
-                        <span className={getStyle(STYLES.logo.text.title)}>
-                            Bakchodi <span className="text-purple-200">International PVT. LTD.</span>
-                        </span>
-                        <span className={getStyle(STYLES.logo.text.subtitle)}>
-                            Est. 2026 • Universal
-                        </span>
+                    <div className="hidden md:flex flex-col">
+                        <span className="font-black tracking-tighter text-lg leading-none text-slate-900 group-hover:text-purple-600 transition-colors">BAKCHODI <span className="font-light text-slate-400">INTL.</span></span>
                     </div>
                 </div>
 
-                {/* Right Actions */}
-                <div className="relative z-10 flex items-center gap-6">
-                    <div className={getStyle(STYLES.divider)} />
-
-                    <div className={STYLES.userInfo.container}>
-                        <p className={getStyle(STYLES.userInfo.name)}>{userName}</p>
-                        <div className={STYLES.userInfo.role.wrapper}>
-                            <span className={STYLES.userInfo.role.dot} />
-                            <p className={STYLES.userInfo.role.text}>
-                                {isAdmin ? 'Director of Chaos' : 'Field Agent'}
-                            </p>
-                        </div>
-                    </div>
-
-                    <button className={getStyle(STYLES.avatar.button)}>
-                        <div className={STYLES.avatar.initials}>
-                            {userName.split(' ').map(n => n[0]).join('')}
-                        </div>
-                        <div className={STYLES.avatar.status} />
-                    </button>
+                {/* CENTER: Navigation (Desktop) */}
+                <div className="hidden md:flex items-center p-1 bg-slate-100/50 rounded-full border border-slate-200/50">
+                    {currentUser && <NavLink icon={<LayoutGrid size={16} />} text="Dashboard" onClick={onDashboardClick} active={true} />}
+                    <NavLink icon={<Rocket size={16} />} text="Universe" onClick={onUniverseClick} />
+                    <NavLink icon={<Users size={16} />} text="Crew" onClick={onCrewClick} />
                 </div>
-            </div>
-        </nav>
+
+                {/* RIGHT: Actions */}
+                <div className="flex items-center gap-3 pr-2">
+                    {currentUser ? (
+                        <button onClick={onLogout} className="flex items-center gap-3 pl-1.5 pr-4 py-1.5 rounded-full bg-slate-50 hover:bg-red-50 transition-colors group border border-slate-200/50 hover:border-red-100">
+                            <div className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center overflow-hidden shadow-sm">
+                                <img src={currentUser.image} className="w-full h-full object-cover" alt="" />
+                            </div>
+                            <div className="hidden sm:flex flex-col items-start text-left">
+                                <span className="text-xs font-bold text-slate-900 leading-none">{currentUser.name.split(' ')[0]}</span>
+                                <span className="text-[10px] text-slate-400 font-medium">{currentUser.role.split('&')[0]}</span>
+                            </div>
+                            <LogOut size={14} className="text-slate-300 group-hover:text-red-500 transition-colors ml-1" />
+                        </button>
+                    ) : (
+                        <button onClick={onDashboardClick} className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 hover:scale-105 transition-all shadow-lg shadow-slate-900/20 active:scale-95">
+                            <User size={16} />
+                            <span>Login</span>
+                        </button>
+                    )}
+                </div>
+            </motion.nav>
+        </div>
     );
 };
+
+// Sub-components for cleaner code
+const NavLink = ({ icon, text, active, onClick }) => (
+    <button 
+        onClick={onClick}
+        className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all duration-300 ${active ? 'bg-slate-900 text-white shadow-md shadow-slate-900/10' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'}`}
+    >
+        {icon}
+        <span>{text}</span>
+    </button>
+);
+
+const IconButton = ({ icon, notify }) => (
+    <button className="relative w-11 h-11 rounded-full flex items-center justify-center text-purple-400 hover:text-purple-900 hover:bg-purple-100/80 transition-all active:scale-95">
+        {icon}
+        {notify && <span className="absolute top-2.5 right-2.5 w-2 h-2 bg-red-500 rounded-full border border-white"></span>}
+    </button>
+);
 
 export default Header;
