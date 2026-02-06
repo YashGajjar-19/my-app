@@ -2,10 +2,14 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}", // This line is crucial!
+    "./src/**/*.{js,ts,jsx,tsx}", // Scans all files in src for Tailwind classes
   ],
   theme: {
-    extend: {},
+    extend: { 
+      fontFamily: {
+        sans: ['Plus Jakarta Sans', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

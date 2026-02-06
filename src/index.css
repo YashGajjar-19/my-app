@@ -1,13 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* Replace your body styles */
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+  }
+}
+
 body {
   margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #f8f9fa;
-  /* Light Odoo-style background */
-  color: #333;
+  background-color: #f8fafc;
+  /* Slate 50 */
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
 }
