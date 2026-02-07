@@ -15,8 +15,8 @@ export const rules = [
 ];
 
 export const locationStats = {
-    totalEarthLocations: "100+",
-    galacticOutposts: "12",
+    totalEarthLocations: "500+",
+    galacticOutposts: "120+",
     management: {
         operations: "Yash & Drashti",
         finance: "Bhavy & Vaishali",
@@ -93,34 +93,63 @@ export const earthCities = [
     "Osaka", "Kyoto", "Fukuoka", "Sapporo", "Busan", "Incheon", "Guangzhou", "Shenzhen", "Chengdu", "Xi'an"
 ];
 
+import YashImg from './assets/images/per_bit/Yash.png';
+
 export const members = [
     {
         id: 1,
         name: "Gajjar Yash",
         role: "Founder & Admin",
-        title: "The Boss",
+        title: "The Founder",
         description: "Does A-Z things and fun in the company.",
-        image: "https://api.dicebear.com/9.x/avataaars/svg?seed=GajjarYash&backgroundColor=b6e3f4",
+        image: YashImg,
         isAdmin: true,
-        password: "Admin@19"
+        password: "123",
+        details: {
+            age: 21,
+            dob: "19-07-2005",
+            place: "Sun, Solar System",
+            departments: ["Administration", "Operations", "Chaos Control"],
+            post: "Founder",
+            salary: "Infinite + Private Universes",
+            tasks: ["Masterminding Global Chaos", "Approving Prank", "Intergalactic Diplomacy"]
+        }
     },
     {
         id: 2,
         name: "Bhavy Trivedi",
-        role: "Co-Founder & CFO",
+        role: "Founder & CFO",
         title: "Money Man",
         description: "Manages all finance (A-Z).",
         image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Bhavy&backgroundColor=c0aede",
-        password: "123"
+        password: "123",
+        details: {
+            age: 20,
+            dob: "19-04-2006",
+            place: "Dessa, India",
+            departments: ["Finance", "Treasury", "Laundering (Clothes)"],
+            post: "Chief Money Hoarder",
+            salary: "Infinite + Antimatter Bullion",
+            tasks: ["Counting Cash", "Hiding Assets on Mars", "Inventing New Currencies"]
+        }
     },
     {
         id: 3,
         name: "Drashti Bhatia",
         role: "General Manager & HR Head",
-        title: "The Real Boss",
+        title: "The Manager",
         description: "Second in command. Manages the whole company and HR.",
         image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Drashti&backgroundColor=ffdfbf",
-        password: "123"
+        password: "123",
+        details: {
+            age: 22,
+            dob: "27-09-2004",
+            place: "Pluto, Solar System",
+            departments: ["HR", "Management", "Secret Service"],
+            post: "The Hungry Lady",
+            salary: "$1000 Quadrillion + 10 Private Planets",
+            tasks: ["Managing Yash", "Hiring & Firing Minions", "Keeping Company Secrets"]
+        }
     },
     {
         id: 4,
@@ -129,7 +158,16 @@ export const members = [
         title: "The Tank",
         description: "Controls the army of guards.",
         image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Preet&backgroundColor=ffd5dc",
-        password: "123"
+        password: "123",
+        details: {
+            age: 21,
+            dob: "26-02-2005",
+            place: "Moscow, Russia",
+            departments: ["Security", "Defense", "Gym"],
+            post: "Chief Muscle Officer",
+            salary: "$800 Quadrillion + 1 Private Planet",
+            tasks: ["Guarding the Fridge", "Intimidating Aliens", "Bicep Curls"]
+        }
     },
     {
         id: 5,
@@ -138,7 +176,16 @@ export const members = [
         title: "Creative Chaos",
         description: "Idea giver, worst and best employee. Works under Yash.",
         image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Dhruvi&backgroundColor=b6e3f4",
-        password: "123"
+        password: "123",
+        details: {
+            age: 20,
+            dob: "14-06-2006",
+            place: "Vienna, Austria",
+            departments: ["Design", "Creativity", "Meme Department"],
+            post: "Glitch Artist",
+            salary: "$500 Quadrillion + 50 Private Cities",
+            tasks: ["Designing Memes", "Breaking Production", "Painting on Walls"]
+        }
     },
     {
         id: 6,
@@ -147,7 +194,16 @@ export const members = [
         title: "Number Cruncher",
         description: "Works under Bhavy. Second highest in finance.",
         image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Vaishali&backgroundColor=d1d4f9",
-        password: "123"
+        password: "123",
+        details: {
+            age: 19,
+            dob: "2-01-2007",
+            place: "Toronto, Canada",
+            departments: ["Finance", "Accounts"],
+            post: "Senior Calculator",
+            salary: "$600 Quadrillion + 60 Private Cities",
+            tasks: ["Excel Wizardry", "Hide & Seek with Taxman", "Budgeting Office Parties"]
+        }
     },
     {
         id: 7,
@@ -156,7 +212,16 @@ export const members = [
         title: "The Annoyer",
         description: "Works under Preet. Worst and most annoying employee.",
         image: "https://api.dicebear.com/9.x/avataaars/svg?seed=Riddhi&backgroundColor=ffdfbf",
-        password: "123"
+        password: "123",
+        details: {
+            age: 21,
+            dob: "26-12-2005",
+            place: "Saturn, Solar System",
+            departments: ["Security", "Surveillance", "Gossip"],
+            post: "Director of Annoyance",
+            salary: "$400 Quadrillion + 40 Private Cities",
+            tasks: ["Annoying Preet", "Distributing Gossip", "Authorized Security Breaches"]
+        }
     },
     {
         id: 8,
@@ -165,6 +230,15 @@ export const members = [
         title: "The Ultimate Annoyer",
         description: "Most annoying employee. Handles Production, Sales, and R&D.",
         image: "https://api.dicebear.com/9.x/avataaars/svg?seed=YashviMeghani&backgroundColor=ffd5dc",
-        password: "123"
+        password: "123",
+        details: {
+            age: 21,
+            dob: "07-07-2005",
+            place: "Paris, France",
+            departments: ["R&D", "Sales", "Chaos Production"],
+            post: "Vice President of Nuisance",
+            salary: "$500 Quadrillion + 50 Private Cities",
+            tasks: ["Creating Bugs (Intentionally)", "R&D on Method Acting", "Selling Ice to Eskimos"]
+        }
     },
 ];

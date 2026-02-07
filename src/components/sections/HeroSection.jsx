@@ -5,64 +5,79 @@ import { ArrowRight, Sparkles, Wand2 } from 'lucide-react';
 
 export default function HeroSection() {
     return (
-        <section className="relative min-h-screen flex items-center justify-center px-6 pt-32 pb-20 overflow-hidden">
-            {/* Background Orbs */}
-            <div className="absolute inset-0 -z-10 overflow-hidden">
-                <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-purple-200/40 rounded-full blur-[100px] animate-pulse mix-blend-multiply"></div>
-                <div className="absolute bottom-[20%] right-[20%] w-[600px] h-[600px] bg-fuchsia-200/40 rounded-full blur-[100px] animate-pulse delay-1000 mix-blend-multiply"></div>
-                <div className="absolute top-[40%] left-[50%] -translate-x-1/2 w-[400px] h-[400px] bg-sky-200/40 rounded-full blur-[100px] mix-blend-multiply"></div>
+        <section className="relative min-h-screen flex items-center justify-center px-6 pt-32 pb-20 overflow-hidden bg-slate-50">
+            {/* Background Effects */}
+            <div className="absolute inset-0 -z-10">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+                <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-indigo-500 opacity-20 blur-[100px]"></div>
+                <div className="absolute right-0 top-0 -z-10 h-[500px] w-[500px] bg-purple-500 opacity-10 blur-[100px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
             </div>
 
-            <div className="max-w-6xl mx-auto text-center space-y-12 relative z-10">
+            <div className="max-w-7xl mx-auto text-center relative z-10">
+                
+                {/* Badge */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white/70 backdrop-blur-xl border border-white/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)]"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-8"
                 >
-                    <div className="bg-gradient-to-tr from-yellow-400 to-orange-400 p-1 rounded-full text-white shadow-sm">
-                        <Sparkles size={12} fill="currentColor" />
-                    </div>
-                    <span className="text-sm font-bold text-slate-800 tracking-wide uppercase">Official Portal V2.0</span>
+                    <span className="flex h-2 w-2 rounded-full bg-indigo-500 animate-pulse"></span>
+                    <span className="text-xs font-bold text-slate-600 tracking-wider uppercase">System Operational</span>
                 </motion.div>
 
-                <div className="space-y-6">
+                {/* Main Heading */}
+                <div className="relative mb-8">
                     <motion.h1
-                        initial={{ opacity: 0, y: 60 }}
+                        initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                        className="text-7xl md:text-9xl font-black text-slate-900 tracking-tighter leading-[0.9]"
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        className="text-7xl md:text-9xl font-bold font-display text-slate-900 tracking-tight leading-none"
                     >
                         {companyDetails.name.split(" ")[0]}
-                        <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-600 via-purple-600 to-indigo-600 pb-4">
-                            International
-                        </span>
                     </motion.h1>
-
-                    <motion.p
-                        initial={{ opacity: 0, y: 30 }}
+                    <motion.h1 
+                        initial={{ opacity: 0, y: 40 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-                        className="text-2xl md:text-3xl text-slate-500 max-w-4xl mx-auto font-light leading-relaxed tracking-tight"
+                        transition={{ duration: 0.8, delay: 0.4 }}
+                        className="text-7xl md:text-9xl font-bold font-display text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 tracking-tight leading-none"
                     >
-                        {companyDetails.description}
-                    </motion.p>
+                        International
+                    </motion.h1>
+                    
+                    {/* Decorative Elements */}
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.8 }}
+                        className="absolute -top-12 -right-12 md:top-0 md:right-20 text-yellow-400"
+                    >
+                        <Sparkles size={48} className="animate-spin-slow" />
+                    </motion.div>
                 </div>
+
+                <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
+                    className="text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto font-medium leading-relaxed mb-12"
+                >
+                    {companyDetails.description}
+                </motion.p>
 
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-8"
+                    transition={{ duration: 0.8, delay: 0.8 }}
+                    className="flex flex-col sm:flex-row items-center justify-center gap-4"
                 >
-                    <button className="px-10 py-5 rounded-full bg-slate-900 text-white font-black text-lg hover:bg-slate-800 transition-all hover:scale-105 shadow-[0_20px_50px_-20px_rgba(15,23,42,0.5)] flex items-center gap-3 group">
-                        <span>Join the Madness</span>
-                        <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                    <button className="px-8 py-4 rounded-full bg-slate-900 text-white font-bold text-lg hover:bg-indigo-600 transition-all hover:scale-105 shadow-xl shadow-indigo-500/20 flex items-center gap-2 group">
+                        <span>Join the Crew</span>
+                        <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                     </button>
-                    <button className="px-10 py-5 rounded-full bg-white text-slate-900 border border-slate-200 font-bold text-lg hover:bg-slate-50 transition-all hover:scale-105 shadow-xl shadow-slate-200/50 flex items-center gap-3">
+                    <button className="px-8 py-4 rounded-full bg-white text-slate-700 border border-slate-200 font-bold text-lg hover:bg-slate-50 transition-all hover:border-slate-300 flex items-center gap-2">
                         <Wand2 size={20} className="text-purple-500" />
-                        <span>Read Manifesto</span>
+                        <span>Our Manifesto</span>
                     </button>
                 </motion.div>
             </div>

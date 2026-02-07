@@ -5,14 +5,17 @@ import AboutSection from './components/sections/AboutSection';
 import LocationsSection from './components/sections/LocationsSection';
 import TeamSection from './components/sections/TeamSection';
 import Dashboard from './components/Dashboard';
-import LoginModal from './components/LoginModal';
+import LoginPage from './components/LoginPage';
 
 import { members as initialMembers } from './data';
 
+import ProfilePage from './components/ProfilePage';
+import ChatInterface from './components/ChatInterface';
+
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
-  const [view, setView] = useState('home'); // 'home' | 'dashboard'
+  const [view, setView] = useState('home'); // 'home' | 'login' | 'dashboard' | 'profile' | 'chat'
+  const [selectedMemberProfile, setSelectedMemberProfile] = useState(null);
 
   // Manage members state for password updates (Sync with data.js to pick up new hires)
   const [members, setMembers] = useState(() => {
@@ -40,28 +43,61 @@ export default function App() {
     setMembers(members.map(m => m.id === parseInt(id) ? { ...m, password: newPassword } : m));
   };
 
+
+
   const scrollToSection = (ref) => {
     setView('home');
-    ref.current?.scrollIntoView({ behavior: 'smooth' });
+    // small delay to allow render if coming from another view
+    setTimeout(() => {
+      ref.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
+
+  const handleMemberClick = (member) => {
+    setSelectedMemberProfile(member);
+    setView('profile');
+    window.scrollTo(0, 0);
   };
 
   const handleDashboardClick = () => {
     if (currentUser) {
       setView('dashboard');
     } else {
-      setIsLoginOpen(true);
+      setView('login');
     }
   };
 
   const handleLogin = (user) => {
     setCurrentUser(user);
+    localStorage.setItem('currentUser', JSON.stringify(user));
     setView('dashboard');
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
+    localStorage.removeItem('currentUser');
     setView('home');
   };
+
+  const handleLogoClick = () => {
+    setView('home');
+    window.scrollTo(0, 0);
+  }
+
+  const handleBackToHome = () => {
+    setView('home');
+  }
+
+  // If view is login, render full page login
+  if (view === 'login') {
+    return (
+      <LoginPage
+        onLogin={handleLogin}
+        onBack={handleBackToHome}
+        members={initialMembers}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-fuchsia-500 selection:text-white">
@@ -73,13 +109,7 @@ export default function App() {
         onCrewClick={() => scrollToSection(teamRef)}
         onLogout={handleLogout}
         onLogoClick={() => setView('home')}
-      />
-
-      <LoginModal
-        isOpen={isLoginOpen}
-        onClose={() => setIsLoginOpen(false)}
-        onLogin={handleLogin}
-        members={members}
+        onChatClick={() => setView('chat')}
       />
 
       {view === 'dashboard' && currentUser ? (
@@ -89,6 +119,17 @@ export default function App() {
           members={members}
           onUpdatePassword={handleUpdatePassword}
         />
+      ) : view === 'profile' && selectedMemberProfile ? (
+        <ProfilePage
+          member={selectedMemberProfile}
+          onBack={() => setView('home')}
+        />
+      ) : view === 'chat' && currentUser ? (
+        <ChatInterface
+          currentUser={currentUser}
+          members={members}
+          onBack={() => setView('home')}
+        />
       ) : (
         <main className="pb-10">
           <HeroSection />
@@ -97,7 +138,7 @@ export default function App() {
             <LocationsSection />
           </div>
           <div ref={teamRef}>
-            <TeamSection />
+            <TeamSection onMemberClick={handleMemberClick} />
           </div>
 
           {/* Mega Footer - The Final Frontier */}
@@ -132,7 +173,7 @@ export default function App() {
                 {/* Links Grid */}
                 <div className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
                   <div>
-                    <h4 className="font-bold text-slate-900 mb-6">Company</h4>
+                    <h4 className="font-bold text-slate-900 mb-6 font-display">Company</h4>
                     <ul className="space-y-4 text-sm font-medium text-slate-500">
                       {['Manifesto', 'Our Story', 'Careers (Run!)', 'Press Kit'].map(item => (
                         <li key={item}><a href="#" className="hover:text-purple-600 transition-colors">{item}</a></li>
@@ -140,7 +181,7 @@ export default function App() {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-900 mb-6">Resources</h4>
+                    <h4 className="font-bold text-slate-900 mb-6 font-display">Resources</h4>
                     <ul className="space-y-4 text-sm font-medium text-slate-500">
                       {['Blog of Chaos', 'Prank Ideas', 'Help Center', 'API Status'].map(item => (
                         <li key={item}><a href="#" className="hover:text-purple-600 transition-colors">{item}</a></li>
@@ -148,7 +189,7 @@ export default function App() {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-900 mb-6">Legal</h4>
+                    <h4 className="font-bold text-slate-900 mb-6 font-display">Legal</h4>
                     <ul className="space-y-4 text-sm font-medium text-slate-500">
                       {['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'Disclaimer'].map(item => (
                         <li key={item}><a href="#" className="hover:text-purple-600 transition-colors">{item}</a></li>
@@ -156,7 +197,7 @@ export default function App() {
                     </ul>
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-900 mb-6">Contact</h4>
+                    <h4 className="font-bold text-slate-900 mb-6 font-display">Contact</h4>
                     <ul className="space-y-4 text-sm font-medium text-slate-500">
                       <li>hello@bakchodi.intl</li>
                       <li>+91 999-CHAOS-99</li>

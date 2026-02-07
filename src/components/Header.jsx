@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
-import { Search, Bell, Menu, User, ChevronDown, Rocket, LayoutGrid, Users, LogOut } from 'lucide-react';
+import { Search, Bell, Menu, User, ChevronDown, Rocket, LayoutGrid, Users, LogOut, MessageSquare } from 'lucide-react';
 
 
-const Header = ({ onMenuClick, onDashboardClick, onUniverseClick, onCrewClick, currentUser, onLogout, onLogoClick }) => {
+const Header = ({ onMenuClick, onDashboardClick, onUniverseClick, onCrewClick, currentUser, onLogout, onLogoClick, onChatClick }) => {
     const { scrollY } = useScroll();
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -43,6 +43,16 @@ const Header = ({ onMenuClick, onDashboardClick, onUniverseClick, onCrewClick, c
 
                 {/* RIGHT: Actions */}
                 <div className="flex items-center gap-3 pr-2">
+                    {currentUser && (
+                         <button 
+                            onClick={onChatClick}
+                            className="w-10 h-10 rounded-full bg-slate-50 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 flex items-center justify-center transition-all border border-slate-200/50 hover:border-indigo-100"
+                            title="Open Chat"
+                        >
+                            <MessageSquare size={18} />
+                        </button>
+                    )}
+
                     {currentUser ? (
                         <button onClick={onLogout} className="flex items-center gap-3 pl-1.5 pr-4 py-1.5 rounded-full bg-slate-50 hover:bg-red-50 transition-colors group border border-slate-200/50 hover:border-red-100">
                             <div className="w-9 h-9 rounded-full bg-white border border-slate-200 flex items-center justify-center overflow-hidden shadow-sm">
